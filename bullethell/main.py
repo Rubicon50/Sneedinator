@@ -2,6 +2,7 @@ import pygame, sprites_module, random
 
 WIDTH, HEIGHT = 640, 480
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+FPS = 60
 pygame.display.set_caption("ProjeCturne [PLACEHOLDER]")
 
 def main():
@@ -25,5 +26,5 @@ def pause(screen):
 while keep_going:
 
     #framerate
-    clock.tick(60)
+    clock.tick(FPS)
     
