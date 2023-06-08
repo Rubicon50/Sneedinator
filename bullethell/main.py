@@ -3,7 +3,7 @@ import pygame, sprites_module, random
 def main():
     screen_size = 640,480
     screen = pygame.display.set_mode(screen_size)
-    pygame.display.set_caption("Project TrollFace [PLACEHOLDER]")
+    pygame.display.set_caption("ProjeCturne [PLACEHOLDER]")
     
     
     #main menu
