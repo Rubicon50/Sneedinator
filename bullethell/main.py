@@ -1,9 +1,12 @@
 import pygame, sprites_module, random
 
+WIDTH, HEIGHT = 640, 480
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("ProjeCturne [PLACEHOLDER]")
+
 def main():
-    screen_size = 640,480
-    screen = pygame.display.set_mode(screen_size)
-    pygame.display.set_caption("ProjeCturne [PLACEHOLDER]")
+
+    
     
     
     #main menu
