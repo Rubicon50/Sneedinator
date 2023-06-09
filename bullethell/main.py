@@ -71,3 +71,4 @@ def gameOver(screen):
 def gameLoop(screen):
 #this should load all the sfx necessary for the game, initialize the player sprite (and set up the hitbox), set up the controls, make the shooting work, and then call a function to load level 1. We should make each level a separate module for convenience rather than keeping them all in 1 file imo                        
                         
+main()
