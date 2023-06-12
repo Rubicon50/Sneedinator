@@ -15,7 +15,7 @@ def main():
 def titleScreen(screen):
     #this function contains all the code for the main menu. Once a new game is started, main() will automatically continue.
     background = pygame.image.load(images/BG+UI/main_background.jpg)
-    newGame = pygame.image.load(image/BG+UI/newgame_button.jpg)
+    newGame = pygame.image.load(image/BG+UI/new_game_button.jpg)
     newGame.blit(320,230)
     closeGame = pygame.image.load(images/BG+UI/exit_button.jpg)
     closeGame.blit(320,270)
