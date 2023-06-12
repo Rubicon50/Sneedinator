@@ -26,8 +26,6 @@ def titleScreen(WIN):
     loopContinues = True
     selected = [buttons[0]]
     while loopContinues:
-        clock.tick(FPS)
-        #Clock's ticking is now tied to the FPS
         
         #we do a little event handling
         for event in pygame.event.get():
