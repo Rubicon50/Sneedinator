@@ -14,10 +14,12 @@ def main():
 
 def titleScreen(screen):
     #this function contains all the code for the main menu. Once a new game is started, main() will automatically continue.
-    background = #load title screen BG
-    newGame = game_sprites.button #load image that will be used as new game button, make sure it has the right X/Y coords
-    closeGame = game_sprites.button #load image that will be used as exit button, make sure it has the right X/Y coords
-    #list of buttons to make event handling easier
+    background = pygame.image.load(images/BG+UI/main_background.jpg)
+    newGame = pygame.image.load(image/BG+UI/newgame_button.jpg)
+    newGame.blit(320,230)
+    closeGame = pygame.image.load(images/BG+UI/exit_button.jpg)
+    closeGame.blit(320,270)
+    pygame.display.update()
     buttons = [newGame,closeGame]
     #we should add a clock variable that's tied to the internal clock so that enemy spawns can be predetermined based on time, I'll add this later.
     #sfx and bgm that are used on the title screen should be loaded in this function too, make a variable that equals the sound. then just type "[sfx var. name].play()" when it needs to play
@@ -53,16 +55,10 @@ def titleScreen(screen):
                                     
         #this should make the button you're hovering over light up a bit
         for select in selected:
-            select.set_select()
-     
-        # clears the screen so that the level assets can be loaded
-        all_sprites.clear(screen, background)
-        all_sprites.update()
-        all_sprites.draw(screen)                        
+            select.set_select()                       
                         
                         
 def pause(screen):
-    background = screen
     #fill this in later. The idea is to dim the screen (but not completely blacken it), quiet (but not mute) the music, and bring up the menu. Use EoSD as a reference
             
 def gameOver(screen):
