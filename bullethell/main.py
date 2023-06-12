@@ -12,7 +12,7 @@ def main():
     pygame.quit()
     #when game_intro ends without gameLoop being called, this closes the game
 
-def titleScreen(screen):
+def titleScreen(WIN):
     #this function contains all the code for the main menu. Once a new game is started, main() will automatically continue.
     background = pygame.image.load(images/BG+UI/main_background.jpg)
     newGame = pygame.image.load(image/BG+UI/new_game_button.jpg)
@@ -58,13 +58,13 @@ def titleScreen(screen):
             select.set_select()                       
                         
                         
-def pause(screen):
+def pause(WIN):
     #fill this in later. The idea is to dim the screen (but not completely blacken it), quiet (but not mute) the music, and bring up the menu. Use EoSD as a reference
             
-def gameOver(screen):
+def gameOver(WIN):
 #this should darken the screen, bring up a game over message, and then reuse a chunk of code from titleScreen() to give the player the option to go to the main menu or close the game.
                         
-def gameLoop(screen):
+def gameLoop(WIN):
 #this should load all the sfx necessary for the game, initialize the player sprite (and set up the hitbox), set up the controls, make the shooting work, and then call a function to load level 1. We should make each level a separate module for convenience rather than keeping them all in 1 file imo                        
                         
 main()
