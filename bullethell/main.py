@@ -1,4 +1,4 @@
-import pygame, sprites_module, random
+import pygame, random
 
 WIDTH, HEIGHT = 640, 480
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
