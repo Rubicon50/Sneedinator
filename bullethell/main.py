@@ -4,13 +4,13 @@ WIDTH, HEIGHT = 640, 480
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 60
 pygame.display.set_caption("ProjeCturne")
-pygame.display.set_icon(pygame.image.load(images/BG+UI/icon.png) #when an icon is added, name it icon.png and put it in the filepath referenced here 
+pygame.display.set_icon(pygame.image.load(images/BG+UI/icon.png)) #when an icon is added, name it icon.png and put it in the filepath referenced here 
 def main():
-    while titleScreen(screen):
-        if not gameLoop(screen):
-            break
-    pygame.quit()
-    #when game_intro ends without gameLoop being called, this closes the game
+    titleScreen()
+    GameStart
+
+
+
 
 def titleScreen(WIN):
     #this function contains all the code for the main menu. Once a new game is started, main() will automatically continue.
