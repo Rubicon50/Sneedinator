@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, sys, random
 
 WIDTH, HEIGHT = 640, 480
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -24,7 +24,7 @@ def titleScreen(WIN):
     #we should add a clock variable that's tied to the internal clock so that enemy spawns can be predetermined based on time, I'll add this later.
     #sfx and bgm that are used on the title screen should be loaded in this function too, make a variable that equals the sound. then just type "[sfx var. name].play()" when it needs to play
     loopContinues = True
-    selected = [buttons[0]]
+    selected = buttons[0]
     while loopContinues:
         
         #we do a little event handling
@@ -35,25 +35,22 @@ def titleScreen(WIN):
              
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if selected != [start_button]:
-                        #select sfx should play here
-                        selected = [buttons[(buttons.index(selected[0])-1)]]
+                    if selected != buttons[0]:
+                        #if you're not currently hovering over newGame and you press up, you'll hover over it
+                        selected = buttons[0]
                 if event.key == pygame.K_DOWN:
-                    if selected != [quit_button]:
-                        #select sfx should play here
-                        selected = [buttons[(buttons.index(selected[0])+1)]]
+                    if selected != buttons[1]:
+                        #if you're not currently hovering over closeGame and you press down, you'll hover over it
+                        selected = buttons[1]
                 if event.key == pygame.K_z:
-                        if selected == [newGame]:
-                            #stop the music here as well since the 1st stage music will be loaded alongside stage 1
-                            #Return start game loop value.
-                            return 1
-                        elif selected == [closeGame]:
-                            #Return exit game value. 
-                            return 0                       
-                                    
-        #this should make the button you're hovering over light up a bit
-        for select in selected:
-            select.set_select()                       
+                        if selected == buttons[0]:
+                            #stop the title screen's music here as well since the 1st stage music will be loaded alongside stage 1
+                            #play select sfx
+                            #call a function or whatever is necessary to load the actual gameplay
+                        elif selected == buttons[1]:
+                            pygame.quit()
+                            sys.exit()
+                        #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
                         
                         
 def pause(WIN):
