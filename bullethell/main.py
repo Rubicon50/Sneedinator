@@ -19,6 +19,7 @@ bullets = []
 enemies = []
 
 pygame.display.set_caption("ProjeCturne")
+
 #pygame.display.set_icon(pygame.image.load('bullethell/images/BG+UI/icon.png')) #when an icon is added, name it icon.png and put it in the filepath referenced here 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
@@ -228,6 +229,7 @@ def main():
     clock = pygame.time.Clock()
     gameLoop()
 
+
 def titleScreen(WIN):
     background = pygame.image.load(images/BG+UI/main_background.jpg)
     newGame = pygame.image.load(image/BG+UI/new_game_button.jpg)
@@ -264,12 +266,10 @@ def titleScreen(WIN):
                         selected = buttons[0]
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
-                            pass
                             #stop title screen music
                             #play select sfx
                             #call a function or whatever is necessary to load the actual gameplay
                         elif selected == buttons[1]:
-                            pass
                             #play select sfx
                             time.sleep(2)
                             pygame.quit()
