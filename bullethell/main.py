@@ -232,13 +232,13 @@ def main():
 
 
 def titleScreen(WIN):
-    pygame.image.load("images/BG+UI/main_background.png")
-    newGame = pygame.image.load("images/BG+UI/new_game_button.jpg")
-    newGame.blit(newGame, (640,480))
-    pygame.display.update()
-    closeGame = pygame.image.load("images/BG+UI/exit_button.jpg")
-    WIN.blit(closeGame, (640,540))
-    pygame.display.update()
+    newGame = pygame.image.load("bullethell/images/BG+UI/new_game_button.jpg")
+
+
+    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.jpg")
+
+    testSurf = pygame.surface.Surface((200,200))
+    testSurf.fill(WHITE)
     buttons = [newGame,closeGame]
     loopContinues = True
     selected = buttons[0]
@@ -275,7 +275,10 @@ def titleScreen(WIN):
                             pygame.quit()
                             sys.exit()
                         #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
-                        
+        WIN.blit(closeGame, (640,540))
+        WIN.blit(newGame, (640,200))
+        SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
+        pygame.display.update()
                         
 
 class GameController():
