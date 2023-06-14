@@ -21,7 +21,7 @@ enemies = []
 
 pygame.display.set_caption("ProjeCturne")
 
-pygame.image.load('bullethell/images/BG+UI/icon.png') 
+#pygame.display.set_icon('images/BG+UI/icon.png') 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -228,18 +228,18 @@ def calculate_angle(startxy, speed, angle):
 def main():
     global clock
     clock = pygame.time.Clock()
-    gameLoop()
+    titleScreen(WIN)
 
 
 def titleScreen(WIN):
-    background = pygame.image.load("bullethell/images/BG+UI/main_background.jpg")
-    newGame = pygame.image.load("bullethell/image/BG+UI/new_game_button.jpg")
-    newGame.blit(320,230)
-    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.jpg")
-    closeGame.blit(320,270)
+    pygame.image.load("images/BG+UI/main_background.png")
+    newGame = pygame.image.load("images/BG+UI/new_game_button.jpg")
+    newGame.blit(newGame, (640,480))
+    pygame.display.update()
+    closeGame = pygame.image.load("images/BG+UI/exit_button.jpg")
+    WIN.blit(closeGame, (640,540))
     pygame.display.update()
     buttons = [newGame,closeGame]
-    titleBGM = pygame.mixer.Sound("bullethell/sounds/BGM/title.mp3")
     loopContinues = True
     selected = buttons[0]
     while loopContinues:
@@ -267,12 +267,11 @@ def titleScreen(WIN):
                         selected = buttons[0]
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
-                            pygame.mixer.stop()
                             #play select sfx
-                            #call a function or whatever is necessary to load the actual gameplay
+                            gameLoop()
                         elif selected == buttons[1]:
                             #play select sfx
-                            time.sleep(2)
+                            time.sleep(1)
                             pygame.quit()
                             sys.exit()
                         #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
