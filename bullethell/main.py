@@ -1,9 +1,9 @@
-import pygame,sys, time, random, os, math
+import pygame, sys, time, random, os, math
 
 
 
 WIDTH, HEIGHT = 1280, 960
-SCREEN = pygame.display.set_mode((WIDTH/2, HEIGHT/2))
+SCREEN = pygame.display.set_mode((WIDTH/1.3, HEIGHT/1.3))
 WIN = pygame.surface.Surface((WIDTH, HEIGHT))
 FPS = 60
 BLACK = (0,0,0)
@@ -232,16 +232,14 @@ def main():
 
 
 def titleScreen(WIN):
-    newGame = pygame.image.load("bullethell/images/BG+UI/new_game_button.jpg")
-
-
-    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.jpg")
-
-    testSurf = pygame.surface.Surface((200,200))
-    testSurf.fill(WHITE)
+    newGame = pygame.image.load("bullethell/images/BG+UI/new_game_button.png")
+    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.png")
     buttons = [newGame,closeGame]
     loopContinues = True
     selected = buttons[0]
+    brighten = 128
+    newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD)
+    dim = 128
     while loopContinues:
         
         #we do a little event handling
@@ -255,16 +253,24 @@ def titleScreen(WIN):
                     if selected != buttons[0]:
                         #if you press up and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
                         selected = buttons[0]
+                        newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD)
+                        closeGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB)  
                     elif selected != buttons[1]:
                         #if you press up and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
                         selected = buttons[1]
+                        closeGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        newGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                 if event.key == pygame.K_DOWN:
                     if selected != buttons[1]:
                         #if you press down and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
                         selected = buttons[1]
+                        closeGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        newGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                     elif selected != buttons[0]:
                         #if you press down and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
                         selected = buttons[0]
+                        newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        closeGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
                             #play select sfx
@@ -275,8 +281,8 @@ def titleScreen(WIN):
                             pygame.quit()
                             sys.exit()
                         #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
-        WIN.blit(closeGame, (640,540))
-        WIN.blit(newGame, (640,200))
+        WIN.blit(newGame, (WIDTH/2 - 130, HEIGHT/2 - 270))
+        WIN.blit(closeGame, (WIDTH/2 - 130, HEIGHT/2 + 100))
         SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
         pygame.display.update()
                         
