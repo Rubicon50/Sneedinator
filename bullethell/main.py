@@ -19,7 +19,6 @@ bullets = []
 enemies = []
 
 pygame.display.set_caption("ProjeCturne")
-<<<<<<< Updated upstream
 #pygame.display.set_icon(pygame.image.load('bullethell/images/BG+UI/icon.png')) #when an icon is added, name it icon.png and put it in the filepath referenced here 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
