@@ -3,7 +3,7 @@ import pygame,sys, time, random, os, math
 
 
 WIDTH, HEIGHT = 1280, 960
-SCREEN = pygame.display.set_mode((WIDTH/2, HEIGHT/2))
+SCREEN = pygame.display.set_mode((WIDTH/1.3, HEIGHT/1.3))
 WIN = pygame.surface.Surface((WIDTH, HEIGHT))
 FPS = 60
 BLACK = (0,0,0)
@@ -12,6 +12,7 @@ GRAY = (255/2, 255/2, 255/2)
 BLUE = (0, 0, 160)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+PURPLE = (125,0,225)
 VEL = 5
 FIRERATE = 50
 E_FIRERATE = 500
@@ -26,14 +27,14 @@ class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        #self.image = pygame.Surface((640,480))
-        #self.image.fill(BLACK)
-        #self.image = pygame.transform.rotate(pygame.transform.scale(self.image, (460*2, 400*2)), 90)
+        self.image = pygame.image.load('bullethell/images/BG+UI/main_background.png')
+        self.image = pygame.transform.scale(self.image, (920, 800))
+        self.image = pygame.transform.rotate(self.image, 90)
         #self.rect = self.image.get_rect()
         self.rect = pygame.rect.Rect(WIDTH / 2 - 600 ,HEIGHT / 2 - 460, 800, 920)
     def draw(self):
         #WIN.blit(self.image, ((WIDTH / 2) - 600 ,(HEIGHT / 2) - 460))
-        pygame.draw.rect(WIN, BLACK, self.rect)
+        WIN.blit(self.image, (self.rect.x, self.rect.y) )
 
 class ForegroundThingy():
 
@@ -140,23 +141,24 @@ class Bullet():
         #pygame.draw.rect(surf, RED, self.bullethbox)
 
 class Bullet_H():
-    def __init__(self, x, y, angle):
-        self.bullethbox = pygame.Rect(x, y, 5, 5 )
+    def __init__(self, x, y, angle, speed):
+        self.bullethbox = pygame.Rect(x, y, 16, 16 )
         self.pos = (x, y)
-        self.angle = angle
+        self.angle = angle - 90
         self.bullet = pygame.image.load(os.path.join('bullethell', 'images', 'Sprites' , 'bigBullet.png'))
-        self.bullet = pygame.transform.scale(self.bullet, (16, 16))
-        self.speed = 7
+        self.bullet = pygame.transform.scale(self.bullet, (32, 32))
+        self.speed = speed
     def update(self): 
         self.pos = calculate_angle(self.pos, self.speed, -self.angle)
-        self.rect.center = round(self.pos[0]), round(self.pos[1])
+        self.bullethbox.center = round(self.pos[0]), round(self.pos[1])
 
     def draw(self, surf):
         self.bullethbox.center = self.pos
 
-        bulletrect = self.rotated_bullet.get_rect(center = self.bullethbox.center)
+        bulletrect = self.bullet.get_rect(center = self.bullethbox.center)
+        
 
-        surf.blit(self.rotated_bullet, bulletrect)
+        surf.blit(self.bullet, bulletrect)
         #pygame.draw.rect(surf, RED, self.bullethbox)
 
 class Enemy():
@@ -182,12 +184,13 @@ class Enemy():
                 bullets.append(Bullet(*(self.pos), self.player))
         
     def draw(self, surf):
-        pygame.draw.circle(surf, WHITE, (self.pos), 20)
+        pygame.draw.circle(surf, PURPLE, (self.pos), 20)
 
 class Enemy_2():
-    def __init__(self, x, y, player, moveTime, xvel=0, yvel=0, isShooting=False):
+    def __init__(self, x, y, player, moveTime, bulletVel, xvel=0, yvel=0, isShooting=False):
         self.rect = pygame.Rect(x, y, 20, 20)
         self.moveTime = moveTime*1000
+        self.bulvel = bulletVel
         self.pos = self.rect.center
         self.start_time = 0
         self.start_time2 = 0
@@ -211,6 +214,12 @@ class Enemy_2():
                 if (pygame.time.get_ticks() - self.start_time) >= E_FIRERATE:
                     self.start_time = pygame.time.get_ticks() 
                     bullets.append(Bullet(*(self.pos), self.player))
+        else:
+            if (pygame.time.get_ticks() - self.start_time) >= E_FIRERATE:
+                    self.start_time = pygame.time.get_ticks() 
+                    for angle in range(360, 5):
+                        bullets.append(Bullet_H(*self.pos, angle, self.bulvel))
+
         print(self.start_time2)
 
 
@@ -301,7 +310,7 @@ class GameController():
         else:
             if (pygame.time.get_ticks() - self.now) >= 2000:
                 self.now = pygame.time.get_ticks()
-                enemies.append(Enemy_2(self.bounds.x + 400, 0, self.player, 1, 0, 2,))
+                enemies.append(Enemy_2(randomx, 0, self.player, 0.5, 2, 0, 5,))
 
 
 
@@ -325,7 +334,7 @@ def gameLoop():
     foreground = ForegroundThingy(background)
     global timern
     timern = pygame.time.get_ticks()
-    #enemies.append(Enemy_2(background.rect.x + 400, 0, player, 1, 0, 2,))
+    enemies.append(Enemy_2(background.rect.x + 400, 0, player, 1, 2, 0, 2,))
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -340,7 +349,7 @@ def gameLoop():
 
 
 
-        controller.update()
+        #controller.update()
 
 
 
@@ -363,10 +372,14 @@ def gameLoop():
         for bullet in bullets[:]:
             bullet.draw(WIN)
             bullet.update()
+            pygame.draw.rect(WIN, RED, bullet.bullethbox)
+
             if not background.rect.colliderect(bullet.bullethbox):
                 bullets.remove(bullet)
             elif bullet.bullethbox.colliderect(player.hitbox):
                 bullets.remove(bullet)
+            
+                print("hit")
 
         for enemy in enemies[:]:
             enemy.draw(WIN)
