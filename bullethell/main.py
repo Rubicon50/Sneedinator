@@ -1,5 +1,5 @@
-import pygame, random, os
-import math
+import pygame, sys, time, random, os, math
+
 
 
 WIDTH, HEIGHT = 1280, 960
@@ -19,6 +19,7 @@ bullets = []
 enemies = []
 
 pygame.display.set_caption("ProjeCturne")
+<<<<<<< Updated upstream
 #pygame.display.set_icon(pygame.image.load('bullethell/images/BG+UI/icon.png')) #when an icon is added, name it icon.png and put it in the filepath referenced here 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
@@ -229,7 +230,6 @@ def main():
     gameLoop()
 
 def titleScreen(WIN):
-    #this function contains all the code for the main menu. Once a new game is started, main() will automatically continue.
     background = pygame.image.load(images/BG+UI/main_background.jpg)
     newGame = pygame.image.load(image/BG+UI/new_game_button.jpg)
     newGame.blit(320,230)
@@ -237,42 +237,45 @@ def titleScreen(WIN):
     closeGame.blit(320,270)
     pygame.display.update()
     buttons = [newGame,closeGame]
-    #we should add a clock variable that's tied to the internal clock so that enemy spawns can be predetermined based on time, I'll add this later.
     #sfx and bgm that are used on the title screen should be loaded in this function too, make a variable that equals the sound. then just type "[sfx var. name].play()" when it needs to play
     loopContinues = True
-    selected = [buttons[0]]
+    selected = buttons[0]
     while loopContinues:
-        clock.tick(FPS)
-        #Clock's ticking is now tied to the FPS
         
         #we do a little event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 loopContinues = False
-                return 0
+                sys.exit()
              
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if selected != ["start_button"]:
-                        #select sfx should play here
-                        selected = [buttons[(buttons.index(selected[0])-1)]]
+                    if selected != buttons[0]:
+                        #if you press up and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
+                        selected = buttons[0]
+                    elif selected != buttons[1]:
+                        #if you press up and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
+                        selected = buttons[1]
                 if event.key == pygame.K_DOWN:
-                    if selected != ["quit_button"]:
-                        #select sfx should play here
-                        selected = [buttons[(buttons.index(selected[0])+1)]]
+                    if selected != buttons[1]:
+                        #if you press down and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
+                        selected = buttons[1]
+                    elif selected != buttons[0]:
+                        #if you press down and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
+                        selected = buttons[0]
                 if event.key == pygame.K_z:
-                        if selected == [newGame]:
-                            #stop the music here as well since the 1st stage music will be loaded alongside stage 1
-                            #Return start game loop value.
-                            return 1
-                        elif selected == [closeGame]:
-                            #Return exit game value. 
-                            return 0                       
-                                    
-        #this should make the button you're hovering over light up a bit
-        for select in selected:
-            select.set_select()                       
-
+                        if selected == buttons[0]:
+                            #stop title screen music
+                            #play select sfx
+                            #call a function or whatever is necessary to load the actual gameplay
+                        elif selected == buttons[1]:
+                            #play select sfx
+                            time.sleep(2)
+                            pygame.quit()
+                            sys.exit()
+                        #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
+                        
+                        
 
 class GameController():
 
