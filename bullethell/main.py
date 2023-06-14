@@ -3,7 +3,8 @@ import pygame, sys, time, random, os, math
 
 
 WIDTH, HEIGHT = 1280, 960
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+SCREEN = pygame.display.set_mode((WIDTH/2, HEIGHT/2))
+WIN = pygame.surface.Surface((WIDTH, HEIGHT))
 FPS = 60
 BLACK = (0,0,0)
 YELLOW = (255, 255, 0)
@@ -126,9 +127,9 @@ class Bullet():
         self.rotated_bullet = pygame.transform.rotate(self.bullet, angle)
         self.speed = 7
     def update(self): 
-        if self.isTracking == True: 
-            self.pos = (self.pos[0]+self.dir[0]*self.speed, 
-                        self.pos[1]+self.dir[1]*self.speed)
+
+        self.pos = (self.pos[0]+self.dir[0]*self.speed, 
+                    self.pos[1]+self.dir[1]*self.speed)
 
     def draw(self, surf):
         self.bullethbox.center = self.pos
@@ -266,6 +267,7 @@ def titleScreen(WIN):
                         selected = buttons[0]
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
+                            pass
                             #stop title screen music
                             #play select sfx
                             #call a function or whatever is necessary to load the actual gameplay
@@ -295,7 +297,7 @@ class GameController():
             if (pygame.time.get_ticks() - self.now) >= 2000:
                 self.now = pygame.time.get_ticks()
                 if len(enemies) <= 5:
-                    enemies.append(Enemy(randomx, 0, self.player, 0, 2))
+                    enemies.append(Enemy(randomx, 0, self.player, 0, 2, True))
             
         else:
             if (pygame.time.get_ticks() - self.now) >= 2000:
@@ -379,7 +381,7 @@ def gameLoop():
         player.movement_handling(background)
         player.bullet_handling()
         player.draw()
-        
+        SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
         pygame.display.flip()
         clock.tick(FPS)
 
