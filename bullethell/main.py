@@ -1,4 +1,4 @@
-import pygame, sys, time, random, os, math
+import pygame,sys, time, random, os, math
 
 
 
@@ -21,7 +21,7 @@ enemies = []
 
 pygame.display.set_caption("ProjeCturne")
 
-#pygame.display.set_icon(pygame.image.load('bullethell/images/BG+UI/icon.png')) #when an icon is added, name it icon.png and put it in the filepath referenced here 
+pygame.image.load('bullethell/images/BG+UI/icon.png') 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -232,14 +232,14 @@ def main():
 
 
 def titleScreen(WIN):
-    background = pygame.image.load(images/BG+UI/main_background.jpg)
-    newGame = pygame.image.load(image/BG+UI/new_game_button.jpg)
+    background = pygame.image.load("bullethell/images/BG+UI/main_background.jpg")
+    newGame = pygame.image.load("bullethell/image/BG+UI/new_game_button.jpg")
     newGame.blit(320,230)
-    closeGame = pygame.image.load(images/BG+UI/exit_button.jpg)
+    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.jpg")
     closeGame.blit(320,270)
     pygame.display.update()
     buttons = [newGame,closeGame]
-    #sfx and bgm that are used on the title screen should be loaded in this function too, make a variable that equals the sound. then just type "[sfx var. name].play()" when it needs to play
+    titleBGM = pygame.mixer.Sound("bullethell/sounds/BGM/title.mp3")
     loopContinues = True
     selected = buttons[0]
     while loopContinues:
@@ -267,8 +267,7 @@ def titleScreen(WIN):
                         selected = buttons[0]
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
-                            pass
-                            #stop title screen music
+                            pygame.mixer.stop()
                             #play select sfx
                             #call a function or whatever is necessary to load the actual gameplay
                         elif selected == buttons[1]:
