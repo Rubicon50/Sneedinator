@@ -264,10 +264,12 @@ def titleScreen(WIN):
                         selected = buttons[0]
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
+                            pass
                             #stop title screen music
                             #play select sfx
                             #call a function or whatever is necessary to load the actual gameplay
                         elif selected == buttons[1]:
+                            pass
                             #play select sfx
                             time.sleep(2)
                             pygame.quit()
