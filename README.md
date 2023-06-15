@@ -6,6 +6,6 @@ It was heavily inspired by the Touhou games (which are basically the only well-k
 
 Unfortunately, the project took more time and effort than expected and is unfinished. 
 The game is playable and the mechanics all function as intended, but the visual assets are all placeholders and there's no music or sound effects.
-As well, there's only 1 level which just features a couple enemies and no boss fight.
+As well, there's only 1 level.
 
 Due to the time constraints, this is more of a proof-of-concept than a proper game.
