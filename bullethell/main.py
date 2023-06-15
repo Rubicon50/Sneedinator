@@ -4,7 +4,7 @@ pygame.font.init()
 pygame.mixer.init()
 
 WIDTH, HEIGHT = 1280, 960
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+SCREEN = pygame.display.set_mode((WIDTH/1.3, HEIGHT/1.3))
 WIN = pygame.surface.Surface((WIDTH, HEIGHT))
 FPS = 60
 BLACK = (0,0,0)
@@ -404,7 +404,7 @@ def titleScreen(WIN):
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
                             #play select sfx
-                            gameLoop()
+                            loopContinues = False
                         elif selected == buttons[1]:
                             #play select sfx
                             time.sleep(1)
@@ -678,7 +678,7 @@ def draw_win():
                 run = False
                 pygame.quit()
         winbg = pygame.image.load('bullethell/images/bg+ui/image0.jpg')
-        WIN.blit(pygame.transform.scale(winbg, SCREEN.get_rect().size), (0,0))
+        WIN.blit(pygame.transform.scale(winbg, WIN.get_rect().size), (0,0))
         draw_text = WIN_FONT.render("You're are winner!", 1, WHITE)
         WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2))
         SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
@@ -707,7 +707,7 @@ def gameOver(WIN):
                 run = False
                 pygame.quit()
         winbg = pygame.image.load('bullethell/images/bg+ui/gameover.jpg')
-        WIN.blit(pygame.transform.scale(winbg, SCREEN.get_rect().size), (0,0))
+        WIN.blit(pygame.transform.scale(winbg, WIN.get_rect().size), (0,0))
         draw_text = WIN_FONT.render("DEATH", 1, RED)
         WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2 + 200))
         SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
@@ -796,7 +796,7 @@ def gameLoop():
                 if (pygame.time.get_ticks() - now) >= 200:
                     now = pygame.time.get_ticks()
                     DEATHSOUND.play()
-                    player.hp -= 1
+                    player.hp -= 0
             
  
 
