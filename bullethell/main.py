@@ -11,6 +11,7 @@ BLACK = (0,0,0)
 YELLOW = (255, 255, 0)
 GRAY = (255/2, 255/2, 255/2)
 BLUE = (0, 0, 160)
+DARKBLUE = (0,0,54.5)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 PURPLE = (125,0,225)
@@ -357,6 +358,9 @@ def main():
 
 
 def titleScreen(WIN):
+    titleback = pygame.image.load("bullethell/images/BG+UI/title_background.png")
+    logo = pygame.image.load("bullethell/images/BG+UI/logo.png")
+    logo = pygame.transform.scale(logo, (664/2,776/2))
     newGame = pygame.image.load("bullethell/images/BG+UI/new_game_button.png")
     closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.png")
     buttons = [newGame,closeGame]
@@ -365,6 +369,7 @@ def titleScreen(WIN):
     brighten = 128
     newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD)
     dim = 128
+    paulRect = pygame.Rect(WIDTH/2 - 160, HEIGHT/2 - 400, (664/2), (776/2))
     while loopContinues:
         
         #we do a little event handling
@@ -406,8 +411,14 @@ def titleScreen(WIN):
                             pygame.quit()
                             sys.exit()
                         #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
-        WIN.blit(newGame, (WIDTH/2 - 130, HEIGHT/2 - 270))
-        WIN.blit(closeGame, (WIDTH/2 - 130, HEIGHT/2 + 100))
+        t = pygame.time.get_ticks()/500
+        y = 20 * math.sin(t) + 50
+        paulRect.y = y
+        
+        WIN.blit(titleback, (0,0))
+        WIN.blit(newGame, (WIDTH/2 - 130, HEIGHT/2 - 20))
+        WIN.blit(closeGame, (WIDTH/2 - 130, HEIGHT/2 + 270))
+        WIN.blit(logo, paulRect)
         SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
         pygame.display.update()
                         
