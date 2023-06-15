@@ -1,7 +1,7 @@
+
 import pygame,sys, time, random, os, math
 pygame.font.init()
 pygame.mixer.init()
-
 
 WIDTH, HEIGHT = 1280, 960
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -31,7 +31,7 @@ DEATHSOUND = pygame.mixer.Sound("bullethell/misc/DEAD.wav")
 
 pygame.display.set_caption("ProjeCturne")
 
-pygame.image.load('bullethell/images/BG+UI/icon.png') 
+#pygame.display.set_icon('images/BG+UI/icon.png') 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -349,22 +349,22 @@ def calculate_angle(startxy, speed, angle):
 def main():
     global clock
     clock = pygame.time.Clock()
-    titleScreen()
+
+    titleScreen(WIN)
     gameLoop()
     draw_win()
 
 
+
 def titleScreen(WIN):
-    background = pygame.image.load("bullethell/images/BG+UI/main_background.jpg")
-    newGame = pygame.image.load("bullethell/image/BG+UI/new_game_button.jpg")
-    newGame.blit(320,230)
-    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.jpg")
-    closeGame.blit(320,270)
-    pygame.display.update()
+    newGame = pygame.image.load("bullethell/images/BG+UI/new_game_button.png")
+    closeGame = pygame.image.load("bullethell/images/BG+UI/exit_button.png")
     buttons = [newGame,closeGame]
-    titleBGM = pygame.mixer.Sound("bullethell/sounds/BGM/title.mp3")
     loopContinues = True
     selected = buttons[0]
+    brighten = 128
+    newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD)
+    dim = 128
     while loopContinues:
         
         #we do a little event handling
@@ -378,28 +378,38 @@ def titleScreen(WIN):
                     if selected != buttons[0]:
                         #if you press up and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
                         selected = buttons[0]
+                        newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD)
+                        closeGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB)  
                     elif selected != buttons[1]:
                         #if you press up and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
                         selected = buttons[1]
+                        closeGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        newGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                 if event.key == pygame.K_DOWN:
                     if selected != buttons[1]:
                         #if you press down and aren't on closeGame, that means you're on newGame. This moves you back to closeGame.
                         selected = buttons[1]
+                        closeGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        newGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                     elif selected != buttons[0]:
                         #if you press down and aren't on newGame, that means you're on closeGame. This moves you back to newGame.
                         selected = buttons[0]
+                        newGame.fill((brighten, brighten, brighten), special_flags=pygame.BLEND_RGB_ADD) 
+                        closeGame.fill((dim, dim, dim), special_flags=pygame.BLEND_RGB_SUB) 
                 if event.key == pygame.K_z:
                         if selected == buttons[0]:
-                            pygame.mixer.stop()
                             #play select sfx
-                            #call a function or whatever is necessary to load the actual gameplay
+                            gameLoop()
                         elif selected == buttons[1]:
                             #play select sfx
-                            time.sleep(2)
+                            time.sleep(1)
                             pygame.quit()
                             sys.exit()
                         #note to self: add a thing that makes the currently selected button light up (maybe by increasing contrast?)
-                        
+        WIN.blit(newGame, (WIDTH/2 - 130, HEIGHT/2 - 270))
+        WIN.blit(closeGame, (WIDTH/2 - 130, HEIGHT/2 + 100))
+        SCREEN.blit(pygame.transform.scale(WIN, SCREEN.get_rect().size), (0, 0))
+        pygame.display.update()
                         
 
 class GameController():
